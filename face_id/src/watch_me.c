@@ -1,4 +1,4 @@
-// Forgive the following comments, they are a result of hours of debugging
+// Forgive the following comments/variable naming/quality of code
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -13,16 +13,6 @@ int str_to_int (char* chars) {
 }
 
 int parse_line (char tmp_cur_line[], unsigned char image[500][500][3], int cur_line) {
-    /* This is possibly, the worst code, I have ever written. It is so 
-     * unoptomized, complex, and redudent that it makes me want to scream.
-     * But, if I touch it, it will break, so I am leaving it be. It works
-     * but I am ashamed. I am also sorry for whoever is going to reverse 
-     * this, hopefully they find it to just be converting strings to integers
-     * in an overly complex way. Again, I am sorry, I wish I was better 
-     * at coding. I spent 3 hours on this function. There were (and probably
-     * are) still so many bugs. Will this crash if unexpected data is put 
-     * into it? Hell yeah it will. But, this is a CTF challenge, so I will
-     * not waste an additional hour securing it. */
     int index = 0; // for image
     int index_cur = 0; // for tmp_cur_line
     int char_count = 0;
@@ -38,11 +28,11 @@ int parse_line (char tmp_cur_line[], unsigned char image[500][500][3], int cur_l
                 printf("Parsing error at line %d, real index %d, pixel index %d, current rgb %d, currently pointing at %d/%c\n", cur_line, index_cur, index, cur_pixel, tmp_cur_line[index_cur+char_count], tmp_cur_line[index_cur+char_count]);
                 exit(-1);
             }
-            if (tmp_cur_line[index_cur+char_count] == ' ' || tmp_cur_line[index_cur+char_count] == 0) { // an idiot admires complexity, luckily I don't, the code is just complex because I'm bad at coding
+            if (tmp_cur_line[index_cur+char_count] == ' ' || tmp_cur_line[index_cur+char_count] == 0) { 
                 tmp_cur_line[index_cur+char_count] = 0;
                 strcpy(tmp_chars, (tmp_cur_line+index_cur));
                 image[cur_line][index][cur_pixel] = str_to_int(tmp_chars); // I realized this could have been way simpler by not grouping these into pixels but I already implemented it
-                cur_pixel++; // also wrong! this should be rgb, the index specifies the pixel value. I am not renaming out of sheere lazyness
+                cur_pixel++; // also wrong! this should be rgb, the index specifies the pixel value
                 index_cur = index_cur+char_count+1;
                 char_count = -1;
             }
